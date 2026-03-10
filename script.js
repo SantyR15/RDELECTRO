@@ -23,7 +23,7 @@ function renderProducts(list) {
                 <h3>${p.nombre}</h3>
                 <p class="price">$${p.precio}</p>
             </div>
-            <a href="https://wa.me/543751566825?text=${encodeURIComponent('Hola Las Tres B! Me interesa este producto: ' + p.nombre)}" 
+            <a href="https://wa.me/543751566824?text=${encodeURIComponent('Hola Las Tres B! Me interesa este producto: ' + p.nombre)}" 
                class="btn-consult" target="_blank">Consultar</a>
         </div>
     `).join('');
@@ -47,5 +47,6 @@ searchBar.addEventListener('input', (e) => {
 
 
 loadCatalog();
+
 
 
