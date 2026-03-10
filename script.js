@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycby2Q1M_4UeTCSCLWfYhoDU2L4k-zFv2QlxIUqFALZOz5-LYwlQjV0xLY6LF07daU9Um/exec'; // Reemplaza con tu link /exec
+const API_URL = 'https://script.google.com/macros/s/AKfycbwoS3lcvba0pD1yWT8SOjxWfu_4LoBUtBCV34jMu0387xOW2JeI1NUeLNgNE8gk0Kk7/exec'; // Reemplaza con tu link /exec
 const grid = document.getElementById('product-grid');
 const searchBar = document.getElementById('searchBar');
 const buttons = document.querySelectorAll('.filter-btn');
@@ -47,6 +47,7 @@ searchBar.addEventListener('input', (e) => {
 
 
 loadCatalog();
+
 
 
 
