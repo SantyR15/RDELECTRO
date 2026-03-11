@@ -18,25 +18,31 @@ async function loadCatalog() {
 // Busca esta parte en tu script.js y cámbiala:
 
 function renderProducts(list) {
-    grid.innerHTML = list.map(p => {
-        // Convertimos el precio a número por si viene como texto del Excel
-        const precioNumero = parseFloat(p.precio.toString().replace(/\D/g, ""));
+    if (list.length === 0) {
+        grid.innerHTML = '<p>No se encontraron productos.</p>';
+        return;
+    }
 
-        // Formateamos el número para que tenga puntos de miles
-        const precioFormateado = precioNumero.toLocaleString('es-AR', {
-            style: 'currency',
-            currency: 'ARS',
-            minimumFractionDigits: 0
-        });
+    grid.innerHTML = list.map(p => {
+        // 1. Limpiamos el precio: quitamos cualquier cosa que no sea un número
+        let precioLimpio = p.precio.toString().replace(/[^0-9]/g, '');
+        
+        // 2. Formateamos con puntos de miles manualmente
+        let precioFinal = "";
+        if (precioLimpio !== "") {
+            precioFinal = "$" + new Intl.NumberFormat('es-AR').format(precioLimpio);
+        } else {
+            precioFinal = "Consultar"; // Por si la celda está vacía
+        }
 
         return `
             <div class="product-card">
                 <img src="${p.imagen}" alt="${p.nombre}">
                 <div>
                     <h3>${p.nombre}</h3>
-                    <p class="price">${precioFormateado}</p>
+                    <p class="price">${precioFinal}</p>
                 </div>
-                <a href="https://wa.me/5493751566824?text=${encodeURIComponent('Hola! Me interesa: ' + p.nombre)}" 
+                <a href="https://wa.me/5493751566824?text=${encodeURIComponent('Hola! Me interesa el producto: ' + p.nombre + ' que vi en la web.')}" 
                    class="btn-consult" target="_blank">Consultar</a>
             </div>
         `;
@@ -61,6 +67,7 @@ searchBar.addEventListener('input', (e) => {
 
 
 loadCatalog();
+
 
 
 
