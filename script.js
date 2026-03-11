@@ -15,18 +15,32 @@ async function loadCatalog() {
     }
 }
 
+// Busca esta parte en tu script.js y cámbiala:
+
 function renderProducts(list) {
-    grid.innerHTML = list.map(p => `
-        <div class="product-card">
-            <img src="${p.imagen}" alt="${p.nombre}">
-            <div>
-                <h3>${p.nombre}</h3>
-                <p class="price">$${p.precio}</p>
+    grid.innerHTML = list.map(p => {
+        // Convertimos el precio a número por si viene como texto del Excel
+        const precioNumero = parseFloat(p.precio.toString().replace(/\D/g, ""));
+
+        // Formateamos el número para que tenga puntos de miles
+        const precioFormateado = precioNumero.toLocaleString('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+            minimumFractionDigits: 0
+        });
+
+        return `
+            <div class="product-card">
+                <img src="${p.imagen}" alt="${p.nombre}">
+                <div>
+                    <h3>${p.nombre}</h3>
+                    <p class="price">${precioFormateado}</p>
+                </div>
+                <a href="https://wa.me/5493751566824?text=${encodeURIComponent('Hola! Me interesa: ' + p.nombre)}" 
+                   class="btn-consult" target="_blank">Consultar</a>
             </div>
-            <a href="https://wa.me/+5493751566824?text=${encodeURIComponent('Hola Las Tres B! Me interesa este producto: ' + p.nombre)}" 
-               class="btn-consult" target="_blank">Consultar</a>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 buttons.forEach(btn => {
@@ -47,6 +61,7 @@ searchBar.addEventListener('input', (e) => {
 
 
 loadCatalog();
+
 
 
 
